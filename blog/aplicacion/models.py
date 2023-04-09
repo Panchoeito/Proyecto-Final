@@ -10,7 +10,7 @@ class Persona (models.Model):
     descripcion = models.CharField(max_length=250)
 
     def __str__(self):
-        return f"Usuario {self.nombre_usuario}, Contraseña: {self.contrasenia}"
+        return f"Usuario {self.nombre_usuario}"
     
 class Posteo (models.Model):
     
