@@ -26,7 +26,7 @@
 <body>
     
     <header class="header text-center">	    
-	    <h1 class="blog-name pt-lg-4 mb-0"><a href="{% url 'inicio'%}">{{ mensaje }}</a></h1>
+	    <h1 class="blog-name pt-lg-4 mb-0"><a href="{% url 'inicio'%}">{{ user.username }}</a></h1>
         {% if request.user.is_authenticated %}
 			<div class="my-2 my-md-3">
 				<a class="btn btn-primary" href="{% url 'logout' %}" target="_blank">Salir</a>
@@ -45,9 +45,9 @@
 			<div id="navigation" class="collapse navbar-collapse flex-column" >
 				{% if request.user.is_authenticated %}
 				<div class="profile-section pt-3 pt-lg-0">
-				    <img class="profile-image mb-3 rounded-circle mx-auto" src="{% static 'aplicacion/assets/images/profile.png'%}" alt="image" >			
+				    <img class="profile-image mb-3 rounded-circle mx-auto" src="{{ (Avatar.objects.filter(user = request.user.id)) ([0].imagen.url) }}" alt="image" >			
 					
-					<div class="bio mb-3">Hi, my name is Anthony Doe. Briefly introduce yourself here. You can also provide a link to the about page.<br><a href="{% url 'acerca de mi'%}">Find out more about me</a></div><!--//bio-->
+					<div class="bio mb-3">{{ Persona.descripcion }}<br><a href="{% url 'acerca de mi'%}">Acerca de mi</a></div><!--//bio-->
 					<ul class="social-list list-inline py-3 mx-auto">
 			            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
 			            <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in fa-fw"></i></a></li>

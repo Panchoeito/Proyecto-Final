@@ -22,24 +22,5 @@ class Migration(migrations.Migration):
                 ('descripcion', models.CharField(max_length=250)),
             ],
         ),
-        migrations.CreateModel(
-            name='Posteo',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('titulo', models.CharField(max_length=50)),
-                ('subtitulo', models.CharField(max_length=100)),
-                ('cuerpo', models.CharField(max_length=4000)),
-                ('fecha', models.DateTimeField()),
-                ('imagen', models.ImageField(upload_to='')),
-                ('autor', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='aplicacion.persona', to_field='nombre_usuario')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Comentario',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('comentario', models.CharField(max_length=500)),
-                ('autor', models.ForeignKey(on_delete=django.db.models.deletion.RESTRICT, to='aplicacion.persona', to_field='nombre_usuario')),
-            ],
-        ),
     ]
+

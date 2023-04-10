@@ -1,5 +1,5 @@
 from django.urls import path, include
-from aplicacion.views import index, about, blogpost, bloglist, PosteoList, PosteoCreacion
+from aplicacion.views import index, about, blogpost, bloglist, PosteoList, PosteoCreacion, editarPerfil
 
 urlpatterns = [
     path("", index, name="inicio"),
@@ -8,5 +8,5 @@ urlpatterns = [
     path("about/", about, name="acerca de mi"),
     path('posteo/list/', PosteoList.as_view(), name='List'),
     path('blog-form/', PosteoCreacion.as_view(), name='New'),
-   
+    path('editarPerfil/', editarPerfil, name='EditarPerfil'),
 ]
