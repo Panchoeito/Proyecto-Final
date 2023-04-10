@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from aplicacion.views import index, about, blogpost, bloglist, PosteoList, PosteoCreacion
 
 urlpatterns = [
@@ -8,4 +8,5 @@ urlpatterns = [
     path("about/", about, name="acerca de mi"),
     path('posteo/list/', PosteoList.as_view(), name='List'),
     path('blog-form/', PosteoCreacion.as_view(), name='New'),
+   
 ]

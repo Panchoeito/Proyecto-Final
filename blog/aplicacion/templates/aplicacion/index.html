@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% load static %}
-{% block 'encabezado' %}
+
+{% block encabezado %}
+
 <html lang="en"> 
 <head>
     <title>Inicio</title>
@@ -29,6 +31,10 @@
 			<div class="my-2 my-md-3">
 				<a class="btn btn-primary" href="{% url 'logout' %}" target="_blank">Salir</a>
 			</div>
+		{% else %}
+		<div class="my-2 my-md-3">
+			<a class="btn btn-primary" href="{% url 'login' %}" target="_blank">Ingresar</a>
+		</div>
 		{% endif %}			
 	    <nav class="navbar navbar-expand-lg navbar-dark" >
            
@@ -37,6 +43,7 @@
 			</button>
 
 			<div id="navigation" class="collapse navbar-collapse flex-column" >
+				{% if request.user.is_authenticated %}
 				<div class="profile-section pt-3 pt-lg-0">
 				    <img class="profile-image mb-3 rounded-circle mx-auto" src="{% static 'aplicacion/assets/images/profile.png'%}" alt="image" >			
 					
@@ -50,7 +57,7 @@
 			        </ul><!--//social-list-->
 			        <hr> 
 				</div><!--//profile-section-->
-				
+				{% endif %}
 				<ul class="navbar-nav flex-column text-left">
 					<li class="nav-item active">
 					    <a class="nav-link" href="{% url 'inicio'%}"><i class="fas fa-home fa-fw mr-2"></i>Blog Home <span class="sr-only">(current)</span></a>

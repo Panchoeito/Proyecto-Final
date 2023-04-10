@@ -5,6 +5,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 def index (request):
     return render(request, 'aplicacion/index.html')
@@ -22,9 +23,9 @@ def listaPosteo(request):
     posteos = Posteo.objects.all()
     return render (request, "aplicacion/blog-list.html", {'posteos':posteos})
 
-class PosteoCreacion(CreateView):
+class PosteoCreacion(LoginRequiredMixin ,CreateView):
     model = Posteo
-    success_url = "aplicacion/blog-list.html"
+    success_url = "aplicacion/posteo_form.html"
     fields = ['titulo', 'subtitulo', 'cuerpo', 'autor', 'fecha', 'imagen']
 
 class PosteoList(ListView):

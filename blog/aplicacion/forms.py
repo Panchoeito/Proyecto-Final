@@ -1,9 +1,9 @@
 from django import forms
 
 class PosteoForm(forms.Form):
-    title = forms.CharField(max_length=50)
-    subtitle = forms.CharField(max_length=100)
-    body = forms.CharField(max_length=4000)
-    author = forms.CharField(max_length=50)
-    date = forms.DateTimeField()
-    image = forms.ImageField()
+    titulo = forms.CharField(max_length=50)
+    subtitulo = forms.CharField(max_length=100)
+    cuerpo = forms.CharField(max_length=4000)
+    autor = forms.CharField(max_length=50)
+    fecha = forms.DateTimeField()
+    imagen = forms.ImageField()
