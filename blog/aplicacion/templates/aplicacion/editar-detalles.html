@@ -1,0 +1,38 @@
+{% extends 'aplicacion/index.html' %}
+<!DOCTYPE html>
+{% load static %}
+
+{% block contenido %}
+<div class="main-wrapper">
+	    
+    <article class="blog-post px-3 py-5 p-md-5">
+        <div class="container">
+            <header class="blog-post-header">
+                <h2 class="title mb-2">Editar Detalles de {{user}}</h2>
+
+            </header>
+            <div class="blog-post-body">
+
+                <h5 class="my-3">Formulario:</h5>
+
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+                    <table class="table table-striped my-5" enctype="multipart/form-data">    
+
+                        {{ detalleFormulario.as_table }}
+                        
+                    </table>
+                    
+                    <input type="submit", value="Enviar">
+                    
+                </form>
+
+
+            
+        </div><!--//container-->
+    </article>
+
+
+
+{% endblock %}

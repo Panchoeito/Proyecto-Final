@@ -3,15 +3,32 @@
 {% load static %}
 
 {% block contenido %}
+<article class="blog-post px-3 py-5 p-md-5">
+    <div class="container">
+        <header class="blog-post-header">
+            <h2 class="title mb-2">Crear Posteo de {{usuario}}</h2>
+
+        </header>
+        <div class="blog-post-body">
+
+            <h5 class="my-3">Formulario:</h5>
 
     <div class="main-wrapper">
 	    
 		<form method="post" enctype="multipart/form-data">
 			{% csrf_token %}
-			{{ form.as_p }}
+            
+                <table class="table table-striped my-5">
+
+                {{ form.as_p }}
+
+                </table>
+
 			<input type="submit" value="enviar"/>
 		</form>
 
+    </div><!--//container-->
+</article>
     
 {% endblock %}
     <!-- *****CONFIGURE STYLE (REMOVE ON YOUR PRODUCTION SITE)****** -->  

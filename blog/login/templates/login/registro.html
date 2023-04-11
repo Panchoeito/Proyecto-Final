@@ -1,27 +1,35 @@
+{% extends 'aplicacion/index.html' %}
 <!DOCTYPE html>
-<htm lang="en">
+{% load static %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-</head>
+{% block contenido %}
 
-<body>
+<article class="blog-post px-3 py-5 p-md-5">
+    <div class="container">
+        <header class="blog-post-header">
+            <h2 class="title mb-2">Inicio de Sesión</h2>
 
-
-    <form action="" method="POST" enctype="multipart/form-data">
-
-        {% csrf_token %}
-
-            {{form.as_p}}
-
-        <button type="submit"> Registrar </button>
-        <button><a href='login'>Si ya tiene usuario, use el Login.</a></button>
+         </header>
+        <div class="blog-post-body">
     
-    </form>
+            <h5 class="my-3">Formulario:</h5>
+        
+            <div class="main-wrapper">
+    
+            {{mensaje}}
 
-</body>
+                <form action="" method="POST" enctype="multipart/form-data">
 
-</html>
+                {% csrf_token %}
+
+                    {{form.as_p}}
+
+                    <button type="submit"> Registrar </button>
+                    <button><a href='login'>Si ya tiene usuario, use el Login.</a></button>
+    
+                </form>
+            </div>
+        </div>
+    </div>
+</article>
+{% endblock %}

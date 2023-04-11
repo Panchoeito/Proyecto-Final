@@ -14,21 +14,9 @@ class UserRegisterForm(UserCreationForm):
     first_name = forms.CharField(label= 'Nombre', max_length=20, required=False)
     imagen = forms.ImageField(label= 'Imagen', required=False)
 
+
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2', 'last_name', 'first_name']
         labels = {'username':'nombre_usuario', 'email':'correo', 'last_name':'apellido', 'first_name':'nombre'}
-        help_texts = {k:"" for k in fields}
-
-class UserEditForm(UserCreationForm):
-    email = forms.EmailField(label='Modificar email')
-    password1 = forms.CharField(label= 'Contraseña', widget= forms.PasswordInput)
-    password2 = forms.CharField(label= 'Repita la contraseña', widget= forms.PasswordInput)
-    last_name = forms.CharField(label= 'Apellido', max_length=20, required=False)
-    first_name = forms.CharField(label= 'Nombre', max_length=20, required=False)
-    imagen = forms.ImageField(label= 'Imagen', required=False)
-
-    class Meta:
-        model = User
-        fields = ['email', 'password1', 'password2', 'last_name', 'first_name']
         help_texts = {k:"" for k in fields}

@@ -6,7 +6,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-
+from django.views.generic.edit import UpdateView
 
 # Create your views here.
 
@@ -56,3 +56,4 @@ def register(request):
         form = UserRegisterForm()
         
     return render(request, "login/registro.html", {"form":form})
+

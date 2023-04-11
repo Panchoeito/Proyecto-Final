@@ -25,15 +25,21 @@
     
     <header class="header text-center">	    
 	    <h1 class="blog-name pt-lg-4 mb-0"><a href="{% url 'inicio'%}">{{ user.username }}</a></h1>
+
         {% if request.user.is_authenticated %}
+
 			<div class="my-2 my-md-3">
 				<a class="btn btn-primary" href="{% url 'logout' %}" target="_blank">Salir</a>
 			</div>
+
 		{% else %}
+
 		<div class="my-2 my-md-3">
 			<a class="btn btn-primary" href="{% url 'login' %}" target="_blank">Ingresar</a>
 		</div>
+
 		{% endif %}			
+
 	    <nav class="navbar navbar-expand-lg navbar-dark" >
            
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
@@ -41,21 +47,26 @@
 			</button>
 
 			<div id="navigation" class="collapse navbar-collapse flex-column" >
+
 				{% if request.user.is_authenticated %}
+
 				<div class="profile-section pt-3 pt-lg-0">
+
 				    <img class="profile-image mb-3 rounded-circle mx-auto" src="{{ url_imagen }}" alt="image" >			
 					
-					<div class="bio mb-3">{{ descripcion }}<br><a href="{% url 'acerca de mi'%}">Acerca de mi</a><br><a href="{% url 'EditarPerfil'%}">Editar mi Perfil</a></div><!--//bio-->
-					<ul class="social-list list-inline py-3 mx-auto">
-			            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter fa-fw"></i></a></li>
-			            <li class="list-inline-item"><a href="#"><i class="fab fa-linkedin-in fa-fw"></i></a></li>
-			            <li class="list-inline-item"><a href="#"><i class="fab fa-github-alt fa-fw"></i></a></li>
-			            <li class="list-inline-item"><a href="#"><i class="fab fa-stack-overflow fa-fw"></i></a></li>
-			            <li class="list-inline-item"><a href="#"><i class="fab fa-codepen fa-fw"></i></a></li>
-			        </ul><!--//social-list-->
-			        <hr> 
+					<div class="bio mb-3">{{ descripcion }}<br><a href="{% url 'acerca de mi' %}">Acerca de mi</a>
+						<br>
+
+						<a href="{% url 'EditarPerfil' %}">Editar mi Perfil</a>
+						<br>
+
+						<a href="{% url 'EditarDetalle' %}">Editar Detalles</a>
+
+					</div><!--//bio-->
 				</div><!--//profile-section-->
+
 				{% endif %}
+				
 				<ul class="navbar-nav flex-column text-left">
 					<li class="nav-item active">
 					    <a class="nav-link" href="{% url 'inicio'%}"><i class="fas fa-home fa-fw mr-2"></i>Inicio<span class="sr-only">(current)</span></a>
@@ -63,14 +74,25 @@
 					<li class="nav-item">
 					    <a class="nav-link" href="{% url 'lista de blog'%}"><i class="fas fa-bookmark fa-fw mr-2"></i>Lista de Posteos</a>
 					</li>
+
+					{% if request.user.is_authenticated %}
+
 					<li class="nav-item">
-					    <a class="nav-link" href="{% url 'acerca de mi'%}"><i class="fas fa-user fa-fw mr-2"></i>Acerca de mi</a>
+					    <a class="nav-link" href="{% url 'acerca de mi' %}"><i class="fas fa-user fa-fw mr-2"></i>Acerca de mi</a>
 					</li>
+
+					{% endif %}
+
 				</ul>
-				
+
+			{% if request.user.is_authenticated %}
+
 				<div class="my-2 my-md-3">
-				    <a class="btn btn-primary" href="https://themes.3rdwavemedia.com/" target="_blank">Get in Touch</a>
+				    <a class="btn btn-primary" href="{% url 'New' %}" target="_blank">Crear nuevo Posteo</a>
 				</div>
+			
+			{% endif %}
+
 			</div>
 		</nav>
     </header>

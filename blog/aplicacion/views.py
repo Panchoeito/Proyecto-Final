@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from aplicacion.models import Persona, Posteo, Comentario, Avatar
-from login.forms import UserEditForm
+from aplicacion.models import Persona, Posteo, Comentario, Perfil, Detalle, Avatar
+from aplicacion.forms import UserEditForm, DetalleEditForm
 from aplicacion.forms  import PosteoForm
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -16,9 +16,15 @@ def index (request):
     if request.user.id:
         descripcion = Persona.objects.filter(user=request.user.id)
         avatares = Avatar.objects.filter(user=request.user.id)
-        return render(request, 'aplicacion/index.html', {"url_imagen": avatares[0].imagen.url,"descripcion":descripcion[0]})
+        if avatares and descripcion:
+            return render(request, 'aplicacion/index.html', {"url_imagen": avatares[0].imagen.url,"descripcion":descripcion[0]})
+        elif descripcion:
+            return render(request, 'aplicacion/index.html', {"descripcion":descripcion[0]})
+        elif avatares:
+            return render(request, 'aplicacion/index.html', {"url_imagen": avatares[0].imagen.url})
     else:
         return render(request, 'aplicacion/index.html')
+
 
 
 def bloglist (request):
@@ -35,25 +41,81 @@ def about (request):
 class PosteoCreacion(LoginRequiredMixin ,CreateView):
     model = Posteo
     success_url = "/"
-    fields = ['titulo', 'subtitulo', 'cuerpo', 'autor', 'fecha', 'imagen']
+    fields = ['titulo', 'subtitulo', 'cuerpo', 'fecha', 'imagen']
+    
+    def form_valid(self, form):
+        form.instance.autor = self.request.user
+        return super().form_valid(form)
+    
 
 class PosteoList(ListView):
     model = Posteo
     template_name = "aplicacion/blog-list.html"
+    
+    def form_valid(self, form):
+        form.instance.imagen = self.request.user
+        return super().form_valid(form), {"url_imagen": Posteo.imagen.url}
+    
+
 
 class blogpost (DetailView):
     
     model = Posteo
     template_name = "aplicacion/blog-post.html"
-class EditarPerfil(LoginRequiredMixin, UpdateView):
-    model = Persona
-    success_url = "/"
-    fields = ['email', 'password1', 'last_name', 'first_name', 'last_name', 'imagen','descripcion']
     
+class EditarPerfil(LoginRequiredMixin, UpdateView):
+    model = Perfil
+    success_url = "/"
+    fields = ['email', 'password1', 'last_name', 'first_name', 'last_name']
+
+class VerPerfil (LoginRequiredMixin, DetailView):
+    
+    model = Detalle
+    template_name = "aplicacion/about.html"
+    
+class EditarDetalle(LoginRequiredMixin, UpdateView):
+    model = Detalle
+    success_url = "aplicacion/about.html"
+    fields = ['detalle', 'mi_blog', 'habilidades', 'otros_proyectos']
+
+class ComentarioList(ListView):
+    model = Comentario
+    template_name = "aplicacion/blog-post.html"
 class EditarComentario(LoginRequiredMixin, CreateView):
+
     model = Comentario
     success_url = reverse_lazy
-    fields = ['comentario', 'autor']
+    fields = ['comentario', 'autor', 'posteo', 'fecha']
+
+@login_required
+def editarDetalle(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+
+        detalleFormulario = DetalleEditForm(request.POST)
+
+        if detalleFormulario.is_valid():
+
+            informacion = detalleFormulario.cleaned_data
+
+            usuario.Detalle.descripcion= informacion['descripcion']
+            usuario.Detalle.mi_blog = informacion['mi_blog']
+            usuario.Detalle.habilidades = informacion['habilidades']
+            usuario.Detalle.otros_proyectos = informacion['otros_proyectos']
+
+
+
+            usuario.save()
+
+            return render(request, "aplicacion/about.html", {"mensaje":"Se han modificado los detalles"})
+
+    else:
+
+        detalleFormulario = UserEditForm(initial={'email': usuario.email})
+
+    return render(request, "aplicacion/editar-detalles.html", {"detalleFormulario": detalleFormulario, "usuario": usuario})
 
 @login_required
 def editarPerfil(request):
@@ -73,7 +135,7 @@ def editarPerfil(request):
             usuario.password2 = informacion['password2']
             usuario.last_name = informacion['last_name']
             usuario.first_name = informacion['first_name']
-            usuario.imagen = informacion['imagen']
+
 
             usuario.save()
 

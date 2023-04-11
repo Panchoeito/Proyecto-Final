@@ -18,7 +18,7 @@
                 <form action="" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                 
-                    <table class="table table-striped my-5">    
+                    <table class="table table-striped my-5" enctype="multipart/form-data">    
 
                         {{ perfilFormulario.as_table }}
                         
