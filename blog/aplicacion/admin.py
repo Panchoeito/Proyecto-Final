@@ -6,3 +6,4 @@ from .models import *
 admin.site.register(Persona)
 admin.site.register(Posteo)
 admin.site.register(Comentario)
+admin.site.register(Avatar)

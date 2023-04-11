@@ -1,15 +1,38 @@
-<h1> Formulario - Editar Perfil </h1>
-<h1> De {{usuario}}</h1>
+{% extends 'aplicacion/index.html' %}
+<!DOCTYPE html>
+{% load static %}
 
-<form action="" method="POST">
-    {% csrf_token %}
+{% block contenido %}
+<div class="main-wrapper">
+	    
+    <article class="blog-post px-3 py-5 p-md-5">
+        <div class="container">
+            <header class="blog-post-header">
+                <h2 class="title mb-2">Editar Perfil de {{usuario}}</h2>
 
-    <table>
+            </header>
+            <div class="blog-post-body">
 
-        {{ perfilFormulario.as_table }}
-    
-    </table>
+                <h5 class="my-3">Formulario:</h5>
 
-    <input type="submit", value="Enviar">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                
+                    <table class="table table-striped my-5">    
 
-</form>
+                        {{ perfilFormulario.as_table }}
+                        
+                    </table>
+                    
+                    <input type="submit", value="Enviar">
+                    
+                </form>
+
+
+            
+        </div><!--//container-->
+    </article>
+
+
+
+{% endblock %}

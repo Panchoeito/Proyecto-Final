@@ -10,7 +10,7 @@ class Persona (models.Model):
     descripcion = models.CharField(max_length=250)
 
     def __str__(self):
-        return f"Usuario {self.nombre_usuario}"
+        return f"{self.descripcion}"
     
 class Posteo (models.Model):
     
@@ -29,3 +29,6 @@ class Comentario (models.Model):
 class Avatar (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     imagen = models.ImageField(upload_to='avatares', null=True, blank=True)
+    
+    def __str__(self):
+        return f"{self.user} - {self.imagen}"
