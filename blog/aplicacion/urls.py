@@ -1,5 +1,5 @@
 from django.urls import path, include
-from aplicacion.views import index, blogpost, bloglist, PosteoList, PosteoCreacion, editarPerfil, EditarComentario, CrearComentario, EditarPerfil, VerPerfil, EditarDetalle, about, editarDetalle, crearDetalle, DetalleCreacion, DetalleList
+from aplicacion.views import index, blogpost, PosteoList, PosteoCreacion, editarPerfil, EditarComentario, CrearComentario, EditarPerfil, VerPerfil, EditarDetalle, editarDetalle, crearDetalle, DetalleCreacion, DetalleList
 
 urlpatterns = [
     path("", index, name="inicio"),

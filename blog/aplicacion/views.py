@@ -26,21 +26,6 @@ def index (request):
         return render(request, 'aplicacion/index.html')
 
 
-
-def bloglist (request):
-    return render(request, 'aplicacion/blog-list.html')
-
-
-
-
-def about (request):
-    if request.user.id:
-        detalle = Detalle.objects.filter(user=request.user.id)
-
-    return render(request, 'aplicacion/about.html',{"detalle":detalle})
-
-
-
 class PosteoCreacion(LoginRequiredMixin ,CreateView):
     model = Posteo
     success_url = "/"
