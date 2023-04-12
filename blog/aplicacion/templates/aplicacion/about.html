@@ -4,36 +4,40 @@
 
 {% block contenido %}
 
-    
+   
     <div class="main-wrapper">
-	    	    
-	    <article class="about-section py-5">
+
+	    {% for detalle in object_list %}	    
+	    
+        <article class="about-section py-5">
 		    <div class="container">
 			    <h2 class="title mb-3">Acerca de mi</h2>
 			{% if detalle %}
-			    <p>{{ detalle }}</p>
+			    <p>{{ detalle.descripcion }}</p>
             {% endif %}
 			    <figure><img class="img-fluid" src="{{ url_imagen }}" alt="image"></figure>
 			    <h5 class="mt-5">Acerca de mi Blog</h5>
-            {% if mi_blog %}
-			    <p>{{ mi_blog }}</p>
+            {% if detalle %}
+			    <p>{{ detalle.mi_blog }}</p>
             {% endif %}
 			    <h5 class="mt-5">Mis habilidades</h5>
-            {% if habilidades %}
-			    <p>{{ habilidades }}</p>
+            {% if detalle %}
+			    <p>{{ detalle.habilidades }}</p>
             {% endif %}
 			    <h5 class="mt-5">Otros Proyectos</h5>
-            {% if otros_proyectos %}
-			    <p>{{ otros_proyectos }}</p>
+            {% if detalle %}
+			    <p>{{ detalle.otros_proyectos }}</p>
             {% endif %}
                 <br>
             {% if request.user.is_authenticated %}
                 <h5 class="mt-5">Editar campos</h5>
-                    <a href="{% url 'Editar detalles' %}"> Editar
+                    <a href="{% url 'Editar Detalle' %}"> Editar
             {% endif %}
 		    </div>
-	    </article><!--//about-section-->
-	    
+	</article><!--//about-section-->
+        {% endfor %}
+
+
 	    <section class="cta-section theme-bg-light py-5">
 		    <div class="container text-center">
 			    <h2 class="heading">Newsletter</h2>

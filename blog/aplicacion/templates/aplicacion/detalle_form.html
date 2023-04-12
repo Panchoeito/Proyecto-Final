@@ -3,53 +3,33 @@
 {% load static %}
 
 {% block contenido %}
-    
-    <div class="main-wrapper">
+<article class="blog-post px-3 py-5 p-md-5">
+    <div class="container">
+        <header class="blog-post-header">
+            <h2 class="title mb-2">Agregar detalles de {{usuario}}</h2>
+
+        </header>
+        <div class="blog-post-body">
+
+            <h5 class="my-3">Formulario:</h5>
+
+            <div class="main-wrapper">
 	    
-	    <article class="blog-post px-3 py-5 p-md-5">
-		    <div class="container">
-			    <header class="blog-post-header">
-				    <h2 class="title mb-2">{{ posteo.titulo }}</h2>
-				    <div class="meta mb-3"><span class="date">{{ posteo.fecha }}</span></div>
-			    </header>
-			    
-			    <div class="blog-post-body">
-				    
-				    <h3 class="mt-5 mb-3">{{ posteo.subtitulo }}</h3>
-				    <p>{{ posteo.cuerpo }}</p>
+		        <form method="post" enctype="multipart/form-data">
+			        {% csrf_token %}
+            
+                    <table class="table table-striped my-5">
 
-				    
-			    <nav class="blog-nav nav nav-justified my-5">
-				  <a class="nav-link-prev nav-item nav-link rounded-left" href="{% url 'lista de blog' %}">Atras<i class="arrow-prev fas fa-long-arrow-alt-left"></i></a>
+                        {{ form.as_p }}
 
-				</nav>
-				
+                    </table>
 
-<!--			<div class="blog-comments-section">
-					
-
-					<div class="input-group">
-						
-                        <span class="input-group-text">Ingresá un comentario</span>
-                        <br>
-						<a href="{% url 'Crear Comentario' %}">Comentar</a>
-				</div>
-					
-					
-					
-
-				
-		    </div> -->	<!--//container-->
-	    </article>
-	    
-	    <footer class="footer text-center py-2 theme-bg-dark">
-		   
-	        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
-                <small class="copyright">Designed with <i class="fas fa-heart" style="color: #fb866a;"></i> by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
-		   
-	    </footer>
-    
-    </div><!--//main-wrapper-->
+			        <input type="submit" value="enviar"/>
+		        </form>
+            </div>
+        </div>
+    </div><!--//container-->
+</article>
     
 {% endblock %}
     <!-- *****CONFIGURE STYLE (REMOVE ON YOUR PRODUCTION SITE)****** -->  
@@ -71,8 +51,7 @@
         </div><!--//panel-inner-->
     </div><!--//configure-panel-->
 
-    <!-- Bootstrap -->  
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    
        
     <!-- Javascript -->          
     <script src="{% static 'aplicacion/assets/plugins/jquery-3.3.1.min.js'%}"></script>

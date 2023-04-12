@@ -40,10 +40,10 @@ class Perfil (models.Model):
 
     
 class Detalle (models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    imagen = models.ForeignKey(Avatar, on_delete=models.RESTRICT, null=True, blank=True)
-    descripcion = models.OneToOneField(Persona, on_delete=models.RESTRICT, null=True, blank=True, default="Ingrese aquí sus proyectos")
-    mi_blog = models.CharField(max_length=400, null=True, blank=True, default="Ingrese aquí sus proyectos")
-    habilidades = models.CharField(max_length=400, null=True, blank=True, default="Ingrese aquí sus proyectos")
+    user = models.ForeignKey(User, on_delete=models.RESTRICT)
+    imagen = models.ImageField(null=True, blank=True)
+    descripcion = models.CharField(max_length=400, null=True, blank=True, default="Ingrese aquí su descripción")
+    mi_blog = models.CharField(max_length=400, null=True, blank=True, default="Ingrese aquí el motivo de su blog")
+    habilidades = models.CharField(max_length=400, null=True, blank=True, default="Ingrese aquí las habilidades que posee")
     otros_proyectos = models.CharField(max_length=400, null=True, blank=True, default="Ingrese aquí sus proyectos")
     

@@ -33,10 +33,17 @@ class UserEditForm(UserCreationForm):
         fields = ['email', 'password1', 'password2', 'last_name', 'first_name']
         help_texts = {k:"" for k in fields}
     
-class DetalleEditForm (UserCreationForm):
+class DetalleCreateForm(forms.Form):
 
     descripcion = forms.CharField(label='descripcion', max_length=400)
     mi_blog = forms.CharField(label='Acerca de mi blog',max_length=400)
-    habilidades = forms.CharField(label='Hanilidades',max_length=400)
+    habilidades = forms.CharField(label='Habilidades',max_length=400)
+    otros_proyectos = forms.CharField(label='Otros proyectos',max_length=400)
+
+class DetalleEditForm(UserEditForm):
+
+    descripcion = forms.CharField(label='descripcion', max_length=400)
+    mi_blog = forms.CharField(label='Acerca de mi blog',max_length=400)
+    habilidades = forms.CharField(label='Habilidades',max_length=400)
     otros_proyectos = forms.CharField(label='Otros proyectos',max_length=400)
         

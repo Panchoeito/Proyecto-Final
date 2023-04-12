@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from aplicacion.models import Persona, Posteo, Comentario, Perfil, Detalle, Avatar
-from aplicacion.forms import UserEditForm, DetalleEditForm
+from aplicacion.forms import UserEditForm, DetalleEditForm, DetalleCreateForm
 from aplicacion.forms  import PosteoForm
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -34,7 +34,10 @@ def bloglist (request):
 
 
 def about (request):
-    return render(request, 'aplicacion/about.html')
+    if request.user.id:
+        detalle = Detalle.objects.filter(user=request.user.id)
+
+    return render(request, 'aplicacion/about.html',{"detalle":detalle})
 
 
 
@@ -58,7 +61,7 @@ class PosteoList(ListView):
     
 
 
-class blogpost (DetailView):
+class blogpost(DetailView):
     
     model = Posteo
     template_name = "aplicacion/blog-post.html"
@@ -72,7 +75,22 @@ class VerPerfil (LoginRequiredMixin, DetailView):
     
     model = Detalle
     template_name = "aplicacion/about.html"
+
+class DetalleCreacion(LoginRequiredMixin ,CreateView):
+    model = Detalle
+    success_url = "about"
+    fields = ['descripcion', 'mi_blog', 'habilidades', 'otros_proyectos', 'imagen']
     
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+class DetalleList(ListView):
+    model = Detalle
+    template_name = "aplicacion/about.html"
+    
+    def form_valid(self, form):
+        form.instance.imagen = self.request.user
+        return super().form_valid(form), {"url_imagen": Detalle.imagen.url}    
 class EditarDetalle(LoginRequiredMixin, UpdateView):
     model = Detalle
     success_url = "aplicacion/about.html"
@@ -86,6 +104,42 @@ class EditarComentario(LoginRequiredMixin, CreateView):
     model = Comentario
     success_url = reverse_lazy
     fields = ['comentario', 'autor', 'posteo', 'fecha']
+    
+class CrearComentario(CreateView):
+    model=Comentario
+    success_url="blog-post"
+    fields=['comentario', 'autor']
+
+@login_required
+def crearDetalle(request):
+
+    usuario = request.user
+
+    if request.method == 'POST':
+
+        detalleFormulario = DetalleCreateForm(request.POST)
+
+        if detalleFormulario.is_valid():
+
+            informacion = detalleFormulario.cleaned_data
+
+            usuario.descripcion= informacion['descripcion']
+            usuario.mi_blog = informacion['mi_blog']
+            usuario.habilidades = informacion['habilidades']
+            usuario.otros_proyectos = informacion['otros_proyectos']
+
+
+
+            usuario.save()
+
+            return render(request, "aplicacion/about.html", {"mensaje":"Se han modificado los detalles", "usuario":usuario})
+
+    else:
+
+        detalleFormulario = DetalleCreateForm()
+
+    return render(request, "aplicacion/editar-detalles.html", {"detalleFormulario": detalleFormulario, "usuario":usuario})
+
 
 @login_required
 def editarDetalle(request):
@@ -100,22 +154,23 @@ def editarDetalle(request):
 
             informacion = detalleFormulario.cleaned_data
 
-            usuario.Detalle.descripcion= informacion['descripcion']
-            usuario.Detalle.mi_blog = informacion['mi_blog']
-            usuario.Detalle.habilidades = informacion['habilidades']
-            usuario.Detalle.otros_proyectos = informacion['otros_proyectos']
+            usuario.descripcion= informacion['descripcion']
+            usuario.mi_blog = informacion['mi_blog']
+            usuario.habilidades = informacion['habilidades']
+            usuario.otros_proyectos = informacion['otros_proyectos']
 
 
 
             usuario.save()
 
-            return render(request, "aplicacion/about.html", {"mensaje":"Se han modificado los detalles"})
+            return render(request, "aplicacion/about.html", {"mensaje":"Se han modificado los detalles", "usuario":usuario})
 
     else:
 
-        detalleFormulario = UserEditForm(initial={'email': usuario.email})
+        detalleFormulario = DetalleEditForm()
 
-    return render(request, "aplicacion/editar-detalles.html", {"detalleFormulario": detalleFormulario, "usuario": usuario})
+    return render(request, "aplicacion/editar-detalles.html", {"detalleFormulario": detalleFormulario, "usuario":usuario})
+
 
 @login_required
 def editarPerfil(request):
@@ -147,7 +202,3 @@ def editarPerfil(request):
 
     return render(request, "aplicacion/editar-perfil.html", {"perfilFormulario": perfilFormulario, "usuario": usuario})
 
-class CrearComentario(CreateView):
-    model=Comentario
-    success_url="blog-post"
-    fields=['comentario', 'autor']
